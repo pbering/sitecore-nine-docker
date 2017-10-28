@@ -8,7 +8,7 @@ Docker images for Sitecore 9, a XM1 CM and a SQL Server. The Sitecore Install Fr
 1. Copy **Sitecore 9.0.0 rev. 171002 (OnPrem)_cm.scwdp.zip** into **.\sitecore-xm1\install**.
 1. Unzip **XM1 Configuration files rev.171002.zip** and copy **sitecore-XM1-cm.json** into **.\sitecore-xm1\install**.
 1. Copy your **license.xml** into into **.\sitecore-xm1\install**.
-1. Open **Sitecore 9.0.0 rev. 171002 (OnPrem)_cm.scwdp.zip** and the following files into **.\sitecore-sql\install**:
+1. Open **Sitecore 9.0.0 rev. 171002 (OnPrem)_cm.scwdp.zip** and copy the following files into **.\sitecore-sql\install**:
    1. Sitecore.Core.dacpac
    1. Sitecore.Master.dadcpac
    1. Sitecore.Web.dacpac
