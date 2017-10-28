@@ -19,3 +19,11 @@ Docker images for Sitecore 9, a XM1 CM and a SQL Server. The Sitecore Install Fr
 
 1. Start: `docker-compose up`
 1. Get IP: `docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' sitecoreninedocker_sitecore_1` and open with browser.
+
+## Persistence
+
+If you need persistence you can manually build the Sitecore image specifying an external SQL server:
+
+    docker image build --build-arg SQL_SERVER=XXX --build-arg SQL_USER=XXX --build-arg SQL_PASSWORD=XXX --build-arg SQL_DB_PREFIX=XXX ./sitecore-xm1
+
+Or you can roll your own Dockerfile using this as a base and add your own ConnectionStrings.config.
