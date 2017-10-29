@@ -24,14 +24,18 @@ RUN Install-PackageProvider -Name NuGet -Force; `
     Register-PSRepository -Name SitecoreGallery -SourceLocation https://sitecore.myget.org/F/sc-powershell/api/v2; `
     Install-Module SitecoreInstallFramework -RequiredVersion 1.0.2 -Force
 
+# Remove base image defaults
+RUN Remove-Website -Name 'Default Web Site'
+
 # Add files
 ADD ./install /install
 
 # Set workdir
 WORKDIR /install
 
-# Remove base image defaults
-RUN Remove-Website -Name 'Default Web Site'
+# Expand installation files
+RUN Expand-Archive -Path '*.zip' -DestinationPath '.'; `
+    Expand-Archive -Path '*Configuration files*.zip' -DestinationPath '.'
 
 # Modify config to skip database install
 ENV SIF_CONFIG="./sitecore-XM1-cm.json"

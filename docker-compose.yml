@@ -3,12 +3,12 @@ version: '3.3'
 services:
 
   sql:
-    image: sc9sql
+    image: sc9xm1sql
     build:
       context: .\sitecore-sql
 
-  sitecore:
-    image: sc9xm1
+  cm:
+    image: sc9xm1cm
     build:
       context: .\sitecore-xm1
     ports: 

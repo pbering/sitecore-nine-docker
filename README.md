@@ -4,21 +4,19 @@ Docker images for Sitecore 9, a XM1 CM and a SQL Server. The Sitecore Install Fr
 
 ## Preparations
 
-1. Download [Packages for XM Scaled](https://dev.sitecore.net/~/media/617694E165634C1E92BD30D894C24AA9.ashx) and unzip.
-1. Copy **Sitecore 9.0.0 rev. 171002 (OnPrem)_cm.scwdp.zip** into **.\sitecore-xm1\install**.
-1. Unzip **XM1 Configuration files rev.171002.zip** and copy **sitecore-XM1-cm.json** into **.\sitecore-xm1\install**.
-1. Copy your **license.xml** into into **.\sitecore-xm1\install**.
-1. Open **Sitecore 9.0.0 rev. 171002 (OnPrem)_cm.scwdp.zip** and copy the following files into **.\sitecore-sql\install**:
+1. Download [Packages for XM Scaled](https://dev.sitecore.net/~/media/617694E165634C1E92BD30D894C24AA9.ashx) into **.\sitecore-xm1\install**.
+1. Open **Sitecore 9.0.0 rev. 171002 (WDP XM1 packages).zip** and inside, open **Sitecore 9.0.0 rev. 171002 (OnPrem)_cm.scwdp.zip** and copy the following files into **.\sitecore-sql\install**:
    1. Sitecore.Core.dacpac
    1. Sitecore.Master.dadcpac
    1. Sitecore.Web.dacpac
    1. Sitecore.ExperienceForms.dacpac
+1. Copy your **license.xml** into into **.\sitecore-xm1\install**.
 1. Build with: `docker-compose build` (takes a while).
 
 ## Usage
 
 1. Start: `docker-compose up`
-1. Get IP: `docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' sitecoreninedocker_sitecore_1` and open with browser.
+1. Get IP: `docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' sitecoreninedocker_cm_1` and open with browser.
 
 ## Persistence
 
