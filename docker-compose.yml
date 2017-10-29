@@ -5,12 +5,12 @@ services:
   sql:
     image: sc9xm1sql
     build:
-      context: .\sitecore-sql
+      context: .\xm1\sql
 
   cm:
     image: sc9xm1cm
     build:
-      context: .\sitecore-xm1
+      context: .\xm1\cm
     ports: 
       - 80:80
     links:

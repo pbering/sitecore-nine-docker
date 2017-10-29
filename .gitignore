@@ -1,5 +1,5 @@
-sitecore*/install/license.xml
-sitecore*/install/sitecore-*.json
-sitecore*/install/sitecore*.zip
-sitecore*/install/*.dacpac
+xm1/*/install/license.xml
+xm1/*/install/sitecore-*.json
+xm1/*/install/sitecore*.zip
+xm1/*/install/*.dacpac
 Build.ps1
