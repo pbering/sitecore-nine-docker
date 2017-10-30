@@ -38,13 +38,14 @@ RUN Expand-Archive -Path '*.zip' -DestinationPath '.'; `
     Expand-Archive -Path '*Configuration files*.zip' -DestinationPath '.'
 
 # Modify config to skip database install
+ENV SITENAME="sc"
 ENV SIF_CONFIG="./sitecore-XM1-cm.json"
 RUN $config = Get-Content $env:SIF_CONFIG | Where-Object { $_ -notmatch '^\s*\/\/'} | Out-String | ConvertFrom-Json; `
     $config.Tasks.InstallWDP.Params.Arguments | Add-Member -Name 'Skip' -Value @(@{'ObjectName' = 'dbDacFx'}, @{'ObjectName' = 'dbFullSql'}) -MemberType NoteProperty; `
+    $config.Variables.'Site.PhysicalPath' = 'C:\inetpub\{0}' -f $env:SITENAME; `
     ConvertTo-Json $config -Depth 50 | Set-Content -Path $env:SIF_CONFIG
 
 # Install Sitecore
-ENV SITENAME="sc"
 RUN Install-SitecoreConfiguration -Path $env:SIF_CONFIG `
     -Package "./Sitecore*_cm.scwdp.zip" `
     -LicenseFile "./license.xml" `
@@ -71,12 +72,14 @@ WORKDIR /
 RUN Clear-WebConfiguration -PSPath ('IIS:\Sites\{0}' -f $env:SITENAME) -Filter '/system.webserver/rewrite/rules/rule'; `
     Set-WebConfiguration -PSPath ('IIS:\Sites\{0}' -f $env:SITENAME) -Filter '/system.web/customErrors/@mode' -Value 'Off'; `
     Set-Itemproperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Services\Dnscache\Parameters' -Name ServerPriorityTimeLimit -Value 0 -Type DWord; `
-    Copy-Item -Path 'C:/install/*.config' -Destination ('C:/inetpub/wwwroot/{0}/App_Config/Include' -f $env:SITENAME)
+    Copy-Item -Path 'C:/install/*.config' -Destination ('C:/inetpub/{0}/App_Config/Include' -f $env:SITENAME)
 
 # Cleanup
 RUN Start-Process msiexec.exe -ArgumentList '/x', $env:WEBDEPLOY_MSI, '/quiet', '/norestart' -NoNewWindow -Wait; `
     Uninstall-Module SitecoreInstallFramework -Force; `
-    Remove-Item 'C:/install' -Force -Recurse
+    Remove-Item 'C:/install' -Force -Recurse; `
+    Remove-Item $env:WEBDEPLOY_MSI -Force; `
+    Remove-Item $env:URLREWRITE_MSI -Force
 
 # Start site
 RUN Start-WebAppPool -Name $env:SITENAME; `
