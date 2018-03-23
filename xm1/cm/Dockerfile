@@ -22,7 +22,7 @@ RUN Start-Process msiexec.exe -ArgumentList '/i', $env:URLREWRITE_MSI, '/quiet',
 # Install SIF
 RUN Install-PackageProvider -Name NuGet -Force; `
     Register-PSRepository -Name SitecoreGallery -SourceLocation https://sitecore.myget.org/F/sc-powershell/api/v2; `
-    Install-Module SitecoreInstallFramework -RequiredVersion 1.0.2 -Force
+    Install-Module SitecoreInstallFramework -RequiredVersion 1.2.0 -Force
 
 # Remove base image defaults
 RUN Remove-Website -Name 'Default Web Site'
